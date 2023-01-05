@@ -140,18 +140,19 @@ export class AppComponent implements AfterViewInit {
       width: 0,
       opacity: 0,
     });
-    gsap.from(this.document.querySelector('.info-1__visual img'), {
-      scrollTrigger: {
-        trigger: this.document.querySelector('.info-1__visual img'),
-        scrub: true,
-        toggleClass: 'active',
-        start: '-60% bottom',
-      } as gsap.plugins.ScrollTriggerInstanceVars,
-      duration: 1.5,
-      height: 0,
-      scale: '1.3',
-      opacity: 0,
-    });
+
+    // gsap.from(this.document.querySelector('.info-1__visual'), {
+    //   scrollTrigger: {
+    //     trigger: this.document.querySelector('.info-1__visual'),
+    //     scrub: true,
+    //     toggleClass: 'active',
+    //     start: '-60% bottom',
+    //   } as gsap.plugins.ScrollTriggerInstanceVars,
+    //   duration: 1.5,
+    //   height: 0,
+    //   scale: '1.3',
+    //   opacity: 0,
+    // });
 
     gsap.from(this.document.querySelector('.quote'), {
       scrollTrigger: {
