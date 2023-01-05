@@ -1,7 +1,8 @@
-import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {DOCUMENT} from "@angular/common";
+import Scrollbar from 'smooth-scrollbar';
 
 gsap.registerPlugin(ScrollTrigger); // ScrollTrigger를 사용하겠다고 선언
 
@@ -10,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger); // ScrollTrigger를 사용하겠다고 선�
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
 
   @ViewChild('secondSection', {static : true}) secondSection: ElementRef<HTMLDivElement> | undefined;
   @ViewChild('menu', {static : true}) menu: ElementRef<HTMLDivElement> | undefined;
@@ -24,8 +25,32 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    this.initScrollAnimations();
-    this.initialAnimations();
+
+    let bodyScrollBar: any = Scrollbar.init(document.body, { damping: 0.05, delegateTo: document.body });
+
+    ScrollTrigger.scrollerProxy(document.body, {
+      scrollTop(value) {
+        if (arguments.length) {
+          bodyScrollBar.scrollTop = value;
+        }
+        return bodyScrollBar.scrollTop;
+      }
+    });
+    bodyScrollBar.addListener(ScrollTrigger.update);
+
+    // gsap.from("section.red .text", {
+    //   x: -500,
+    //   opacity:0,
+    //   scrollTrigger: {
+    //     trigger: "section.red",
+    //     scroller: ".scroller",
+    //     //scrub: false,
+    //     start:"top 40%", //start anim when trigger enters 60% viewport
+    //     //end: "bottom center",
+    //     toggleActions: "play none none reset",
+    //     markers:true
+    //   },
+    // });
   }
 
 
@@ -35,8 +60,7 @@ export class AppComponent {
       gsap.to(this.imageFirst.nativeElement, {
         scrollTrigger: {
           trigger: this.imageFirst.nativeElement,
-          scrub: true,
-
+          scrub: true, // GSAP ScrollTrigger의 이벤트가 스크롤이 사용될 때만 재생되도록 만들어주는 속성
           start: '110% center',
         } as gsap.plugins.ScrollTriggerInstanceVars,
         duration: 1.1,
@@ -180,8 +204,8 @@ export class AppComponent {
       gsap.from(this.menu.nativeElement.childNodes, {
         duration: 0.5,
         opacity: 0,
-        y: -20,
-        stagger: 0.2,
+        x: -20,
+        stagger: 0.2, // 주르르륵 나오게 하는 것
         delay: 0.5,
       });
       gsap.from(this.menuSecond.nativeElement.childNodes, {
@@ -223,5 +247,10 @@ export class AppComponent {
       y: -30,
       delay: 0.8,
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.initScrollAnimations();
+    this.initialAnimations();
   }
 }

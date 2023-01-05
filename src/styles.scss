@@ -17,7 +17,7 @@ body {
   box-sizing: inherit;
   position: relative;
   background-color: #fafafa;
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 
@@ -30,6 +30,7 @@ body {
     )
     [center-end] minmax(100px, 1fr) [full-end];
   grid-template-rows: min-content calc(100vh - 120px) 100vh;
+  height: 100vh;
 }
 
 .header {
@@ -206,6 +207,7 @@ img {
     grid-column: 1 / 4;
     font-size: 60px;
     font-weight: 600;
+
   }
 
   p.paragraph {
