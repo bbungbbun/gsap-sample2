@@ -17,8 +17,9 @@ body {
   box-sizing: inherit;
   position: relative;
   background-color: #fafafa;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  height:100%;
+  width:100%;
+  overflow:hidden
 }
 
 .main {

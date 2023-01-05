@@ -26,7 +26,11 @@ export class AppComponent implements AfterViewInit {
 
   ngOnInit(){
 
-    let bodyScrollBar: any = Scrollbar.init(document.body, { damping: 0.05, delegateTo: document.body });
+    let bodyScrollBar: any =
+      Scrollbar.init(document.body, {
+      damping: 0.05,
+      delegateTo: document,
+      renderByPixels: true,});
 
     ScrollTrigger.scrollerProxy(document.body, {
       scrollTop(value) {
@@ -36,21 +40,8 @@ export class AppComponent implements AfterViewInit {
         return bodyScrollBar.scrollTop;
       }
     });
+    ScrollTrigger.defaults({scroller: document.body});
     bodyScrollBar.addListener(ScrollTrigger.update);
-
-    // gsap.from("section.red .text", {
-    //   x: -500,
-    //   opacity:0,
-    //   scrollTrigger: {
-    //     trigger: "section.red",
-    //     scroller: ".scroller",
-    //     //scrub: false,
-    //     start:"top 40%", //start anim when trigger enters 60% viewport
-    //     //end: "bottom center",
-    //     toggleActions: "play none none reset",
-    //     markers:true
-    //   },
-    // });
   }
 
 
@@ -140,6 +131,25 @@ export class AppComponent implements AfterViewInit {
       width: 0,
       opacity: 0,
     });
+
+    const images : any = this.document.querySelector('.info-1__visual');
+
+    let timeline = gsap.timeline({
+      scrollTrigger:{
+        trigger: this.secondSection?.nativeElement,
+        start: 'top top',
+        end: () => '+=' + (images.offsetHeight * 2),
+        scrub: true,
+        pin: true,
+        pinType: 'transform',
+        scroller: document.body
+      }
+    });
+
+    timeline.to(images,{
+      x: '-2000px',
+      duration: 10,
+    })
 
     // gsap.from(this.document.querySelector('.info-1__visual'), {
     //   scrollTrigger: {
