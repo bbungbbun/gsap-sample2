@@ -4,8 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {DOCUMENT} from "@angular/common";
 import Scrollbar from 'smooth-scrollbar';
 
-gsap.registerPlugin(ScrollTrigger); // ScrollTrigger를 사용하겠다고 선언
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,6 +23,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngOnInit(){
+    gsap.registerPlugin(ScrollTrigger); // ScrollTrigger를 사용하겠다고 선언
 
     let bodyScrollBar: any =
       Scrollbar.init(document.body, {
